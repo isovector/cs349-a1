@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 #include "Helicopter.h"
+#include "DifficultyProvider.h"
 
 #include <iostream>
 using namespace std;
@@ -8,8 +9,11 @@ using namespace std;
 typedef std::list<Object*>::iterator ObjectIterator;
 typedef std::list<Object*>::const_iterator ObjectConstIterator;
 
-GameState::GameState() {
+GameState::GameState() :
+    scrollSpeed(200.0f)
+{
     create(new Helicopter(30, 15));
+    create(new DifficultyProvider());
 }
 
 void GameState::update(float delta) {
@@ -19,8 +23,14 @@ void GameState::update(float delta) {
     }
     destroyedObjects.clear();
     
-    for (ObjectIterator it = objects.begin(); it != objects.end(); ++it)
-        (*it)->update(delta);
+    for (ObjectIterator it = objects.begin(); it != objects.end(); ++it) {
+        Object *obj = *it;
+        obj->update(delta);
+        
+        Entity *entity = dynamic_cast<Entity*>(obj);
+        if (entity && entity->autoScrolls)
+            entity->position.x -= scrollSpeed * delta;
+    }
 }
 
 void GameState::draw() const {

@@ -57,7 +57,9 @@ int main() {
         clock_gettime(CLOCK_MONOTONIC, &ts_end);
         
         size_t duration = (ts_end.tv_nsec - ts_start.tv_nsec) / 1000;
-        usleep(SLEEP_DURATION - duration);
+        
+        // sometimes when the window is on a differnt workspace, duration will underflow
+        usleep(min(SLEEP_DURATION - duration, SLEEP_DURATION));
     }
     delete state;
     

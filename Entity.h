@@ -6,11 +6,12 @@
 
 class Entity : public Object {
 public:
-    Entity(vec2 pos);
+    Entity(vec2 pos, bool scrolls = true);
 
     virtual void draw() const;
 
     vec2 position;
+    bool autoScrolls;
 };
 
 #endif

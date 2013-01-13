@@ -17,6 +17,7 @@ public:
     virtual void destroy(Object *obj);
     
 private:
+    float scrollSpeed;
     std::list<Object*> objects;
     std::list<Object*> destroyedObjects;
 };

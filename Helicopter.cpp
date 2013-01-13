@@ -7,7 +7,7 @@
 using namespace std;
 
 Helicopter::Helicopter(float w, float h) :
-    Entity(vec2(0, 0)),
+    Entity(vec2(0, 0), false),
     velocity(0, 200),
     size(w, h)
 {
@@ -31,7 +31,7 @@ void Helicopter::update(float delta) {
     }
     
     if (input.keyPress(XK_space)) {
-        parentState->create(new Projectile(this, vec2(600, 0)));
+        parentState->create(new Projectile(this, vec2(0, 400)));
     }
 }
 

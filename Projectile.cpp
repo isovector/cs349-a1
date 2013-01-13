@@ -1,7 +1,7 @@
 #include "Projectile.h"
 
 Projectile::Projectile(Entity *owner, vec2 vel) :
-    Entity(owner->position),
+    Entity(owner->position, false),
     parent(owner),
     velocity(vel)
 {
@@ -17,5 +17,5 @@ void Projectile::update(float delta) {
 }
 
 void Projectile::draw() const {
-    XFillRectangle(display, win, gc, UNPACKI(position), 3, 3);
+    XFillRectangle(display, win, gc, UNPACKI(position), 4, 10);
 }
