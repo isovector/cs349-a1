@@ -1,17 +1,15 @@
 #ifndef BUILDING_H
 #define BUILDING_H
 
-#include "Entity.h"
+#include "Body.h"
 
-class Building : public Entity {
+class Building : public Body {
 public:
     Building(float width, float height);
 
     virtual void update(float delta);
     virtual void draw() const;
-
-private:
-    vec2 size;
+    virtual void contactNotify(Body *body);
 };
 
 #endif

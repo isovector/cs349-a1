@@ -1,8 +1,7 @@
 #include "Building.h"
 
 Building::Building(float width, float height) :
-    Entity(vec2(600, 400 - height)),
-    size(width, height)
+    Body(vec2(600, 400 - height), vec2(width, height), CG_NEUTRAL)
 {
 }
 
@@ -13,4 +12,8 @@ void Building::update(float delta) {
 
 void Building::draw() const {
     XFillRectangle(display, win, gc, UNPACKI(position), UNPACKI(size));
+}
+
+void Building::contactNotify(Body *body) {
+    destroy();
 }

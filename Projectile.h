@@ -1,14 +1,15 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "Entity.h"
+#include "Body.h"
 
-class Projectile : public Entity {
+class Projectile : public Body {
 public:
     Projectile(Entity *owner, vec2 vel);
 
     virtual void update(float delta);
     virtual void draw() const;
+    virtual void contactNotify(Body *body);
 
 private:
     vec2 velocity;

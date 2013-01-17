@@ -7,9 +7,8 @@
 using namespace std;
 
 Helicopter::Helicopter(float w, float h) :
-    Entity(vec2(0, 0), false),
-    velocity(0, 200),
-    size(w, h)
+    Body(vec2(0, 0), vec2(w, h), CG_FRIEND, false),
+    velocity(0, 200)
 {
 }
 

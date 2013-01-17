@@ -7,8 +7,7 @@
 #include <math.h> 
 
 template <typename T>
-struct vector2
-{
+struct vector2 {
 	T x, y;
 	
 	//! trivial ctor
@@ -103,7 +102,45 @@ struct vector2
 	{	return x*v.x + y*v.y;	}	
 };
 
+
+
+
+template <typename T>
+struct rectangle {
+    vector2<T> position;
+    vector2<T> size;
+    
+    rectangle<T>() {}
+	rectangle<T>(const T &x0, const T &y0, const T &w, const T &h) :
+        position(x0, y0), size(w, h) { }
+    rectangle<T>(const vector2<T> &pos, const vector2<T> &siz) :
+        position(pos), size(siz) { }
+        
+    T left() const { return position.x; }
+    T right() const { return position.x + size.x; }
+    T top() const { return position.y; }
+    T bottom() const { return position.y + size.y; }
+        
+    bool intersects(const rectangle<T> &r2) const {
+        return !(r2.left() > right() || 
+                 r2.right() < left() || 
+                 r2.top() > bottom() ||
+                 r2.bottom() < top());
+    }
+    
+    rectangle<T> intersection(const rectangle<T> &r2) const {
+        T left = max(left(), r2.left());
+        T right = min(right(), r2.right());
+        T top = max(top(), r2.top());
+        T bottom = min(bottom(), r2.bottom());
+        
+        return rectangle<T>(left, top, right - left, bottom - top);
+    }
+};
+
 typedef vector2<float> vec2;
+typedef rectangle<float> rect2;
+
 #define UNPACK(vec) (vec).x, (vec).y
 #define UNPACKI(vec) static_cast<int>((vec).x), static_cast<int>((vec).y)
 
