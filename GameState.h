@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include <list>
+#include <set>
 
 #include "State.h"
 #include "Entity.h"
@@ -19,7 +20,7 @@ public:
 private:
     float scrollSpeed;
     std::list<Object*> objects;
-    std::list<Object*> destroyedObjects;
+    std::set<Object*> destroyedObjects;
 };
 
 #endif

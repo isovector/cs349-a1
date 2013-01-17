@@ -1,9 +1,9 @@
 #ifndef HELICOPTER_H
 #define HELICOPTER_H
 
-#include "Entity.h"
+#include "Body.h"
 
-class Helicopter : public Entity {
+class Helicopter : public Body {
 public:
     Helicopter(float w, float h);
 
@@ -12,7 +12,6 @@ public:
 
 protected:
     vec2 velocity;
-    vec2 size;
 };
 
 #endif

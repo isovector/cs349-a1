@@ -17,7 +17,8 @@ void Input::update(float) {
         unsigned int key = XLookupKeysym(&ev.xkey, 0);
         switch (ev.type) {
             case KeyPress: {
-                keyPresses.insert(key);
+                if (!keyState[key])
+                    keyPresses.insert(key);
                 keyState[key] = true;
             } break;
             
