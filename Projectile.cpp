@@ -17,5 +17,5 @@ void Projectile::update(float delta) {
 }
 
 void Projectile::draw() const {
-    XFillRectangle(display, win, gc, UNPACKI(position), 4, 10);
+    XFillRectangle(display, buffer, gc, UNPACKI(position), 4, 10);
 }

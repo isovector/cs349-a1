@@ -16,7 +16,7 @@ void DifficultyProvider::update(float delta) {
         return;
     
     unsigned int width = rand() % 80 + 10;
-    unsigned int height = rand() % 350 + 50;
+    unsigned int height = rand() % 300 + 50;
     
     parentState->create(new Building(width, height));
     

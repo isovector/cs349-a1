@@ -13,6 +13,7 @@
 extern Display *display;
 extern Window win;
 extern GC gc;
+extern Pixmap buffer;
 
 const size_t FRAMES_PER_SECOND = 60;
 const size_t SLEEP_DURATION = 1000000 / FRAMES_PER_SECOND;

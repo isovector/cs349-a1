@@ -12,5 +12,5 @@ void Building::update(float delta) {
 }
 
 void Building::draw() const {
-    XFillRectangle(display, win, gc, UNPACKI(position), UNPACKI(size));
+    XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
 }

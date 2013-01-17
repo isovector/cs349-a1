@@ -11,6 +11,8 @@ GC gc;
 State *state;
 Input input;
 
+Pixmap buffer;
+
 void initialize_window() {
     display = XOpenDisplay(":0");
     win = XCreateSimpleWindow(display, RootWindow(display, 0), 10, 10, 600, 400, 1, BlackPixel(display, 0), WhitePixel(display, 0));
@@ -35,8 +37,13 @@ void initialize_window() {
     XSelectInput(display, win, ExposureMask | ButtonPressMask | KeyPressMask | KeyReleaseMask);
 }
 
+void initialize_buffers(size_t w, size_t h) {
+    buffer = XCreatePixmap(display, win, w, h, 24);
+}
+
 int main() {
     initialize_window();
+    initialize_buffers(600, 400);
     
     struct timespec ts_start;
     struct timespec ts_end;

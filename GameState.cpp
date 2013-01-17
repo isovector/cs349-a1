@@ -35,7 +35,7 @@ void GameState::update(float delta) {
 
 void GameState::draw() const {
     XSetForeground(display, gc, BlackPixel(display, 0));
-    XFillRectangle(display, win, gc, 0, 0, 600, 400);
+    XFillRectangle(display, buffer, gc, 0, 0, 600, 400);
     XSetForeground(display, gc, WhitePixel(display, 0));
     
     for (ObjectConstIterator it = objects.begin(); it != objects.end(); ++it) {
@@ -43,6 +43,8 @@ void GameState::draw() const {
         if (entity)
             entity->draw();
     }
+    
+  XCopyArea(display, buffer, win, gc, 0, 0, 600, 400, 0, 0);
 }
 
 void GameState::create(Object *obj) {
