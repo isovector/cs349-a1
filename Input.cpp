@@ -6,8 +6,7 @@ using namespace std;
 void Input::update(float) {
     keyPresses.clear();
     
-    while (XPending(display))
-    {
+    while (XPending(display)) {
         XEvent ev;
         XNextEvent(display, &ev);
         
@@ -31,6 +30,11 @@ void Input::update(float) {
                 } else {
                     keyState[key] = false;
                 }
+            } break;
+            
+            case MotionNotify: {
+                cursor.x = ev.xmotion.x;
+                cursor.y = ev.xmotion.y;
             } break;
         }
     }

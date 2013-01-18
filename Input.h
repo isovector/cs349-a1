@@ -16,6 +16,7 @@ public:
     bool keyDown(unsigned int keysym);
     bool keyPress(unsigned int keysym);
 
+    vec2 cursor;
 private:
     std::set<int> keyPresses;
     std::map<int, bool> keyState;

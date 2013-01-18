@@ -34,11 +34,24 @@ void initialize_window() {
     
     XSync(display, false);
     
-    XSelectInput(display, win, ExposureMask | ButtonPressMask | KeyPressMask | KeyReleaseMask);
+    XSelectInput(display, win, ExposureMask | ButtonPressMask | KeyPressMask | KeyReleaseMask | PointerMotionMask);
 }
 
 void initialize_buffers(size_t w, size_t h) {
     buffer = XCreatePixmap(display, win, w, h, 24);
+    
+    // hide the mouse cursor
+    Cursor invisibleCursor;
+    Pixmap bitmapNoData;
+    XColor black;
+    static char noData[] = { 0,0,0,0,0,0,0,0 };
+    black.red = black.green = black.blue = 0;
+
+    bitmapNoData = XCreateBitmapFromData(display, win, noData, 8, 8);
+    invisibleCursor = XCreatePixmapCursor(display, bitmapNoData, bitmapNoData, 
+                                         &black, &black, 0, 0);
+    XDefineCursor(display,win, invisibleCursor);
+    XFreeCursor(display, invisibleCursor);
 }
 
 int main() {

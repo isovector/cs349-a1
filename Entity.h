@@ -3,6 +3,7 @@
 
 #include "a1.h"
 #include "Object.h"
+#include "GfxState.h"
 
 class Entity : public Object {
 public:

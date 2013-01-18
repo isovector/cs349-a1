@@ -25,4 +25,8 @@ void Helicopter::update(float delta) {
 
 void Helicopter::draw() const {
     XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
+
+    XSetForeground(display, gc, 0x00FF00);
+    XFillRectangle(display, buffer, gc, UNPACKI(input.cursor), 10, 10);
+    XSetForeground(display, gc, WhitePixel(display, 0));
 }

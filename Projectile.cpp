@@ -2,6 +2,9 @@
 
 #include "Explosion.h"
 
+#include <iostream>
+using namespace std;
+
 Projectile::Projectile(Entity *owner, vec2 vel) :
     Body(owner->position, vec2(4, 10), CG_FRIEND, false),
     parent(owner),
@@ -19,6 +22,7 @@ void Projectile::update(float delta) {
 }
 
 void Projectile::draw() const {
+    GfxState(0xFF00FF, 0);
     XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
 }
 
