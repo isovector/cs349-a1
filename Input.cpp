@@ -3,9 +3,6 @@
 #include <iostream>
 using namespace std;
 
-Input::Input() {
-}
-
 void Input::update(float) {
     keyPresses.clear();
     
@@ -23,7 +20,17 @@ void Input::update(float) {
             } break;
             
             case KeyRelease: {
-                keyState[key] = false;
+                if (XEventsQueued(display, QueuedAfterReading)) {
+                    XEvent nev;
+                    XPeekEvent(display, &nev);
+
+                    if (!(nev.type == KeyPress && nev.xkey.time == ev.xkey.time
+                        && nev.xkey.keycode == ev.xkey.keycode)) {
+                        keyState[key] = false;
+                    }
+                } else {
+                    keyState[key] = false;
+                }
             } break;
         }
     }

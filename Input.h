@@ -12,8 +12,6 @@
 
 class Input : public Object {
 public:
-    Input();
-
     virtual void update(float elapsed);
     bool keyDown(unsigned int keysym);
     bool keyPress(unsigned int keysym);
