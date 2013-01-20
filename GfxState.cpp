@@ -3,21 +3,16 @@
 #include <iostream>
 using namespace std;
 
-_GfxState::_GfxState() {
+GfxState::GfxState() {
     updateValues();
 }
 
-_GfxState::_GfxState(unsigned long fore, unsigned long back) {
+GfxState::GfxState(unsigned long fore, unsigned long back) {
     updateValues();
-    
-    if (fore != values.foreground)
-        XSetForeground(display, gc, fore);
-    
-    if (back != values.background)
-        XSetForeground(display, gc, back);
+    change(fore, back);
 }
     
-_GfxState::~_GfxState() {
+GfxState::~GfxState() {
     XGCValues newValues;
     updateValues(&newValues);
     
@@ -28,9 +23,29 @@ _GfxState::~_GfxState() {
         XSetForeground(display, gc, values.background);
 }
 
-void _GfxState::updateValues(XGCValues *vals) {
+void GfxState::updateValues(XGCValues *vals) {
     if (vals == NULL)
         vals = &values;
     
     XGetGCValues(display, gc, GCForeground | GCBackground, vals);
+}
+
+void GfxState::change(unsigned long fore, unsigned long back) {
+    if (fore != values.foreground)
+        XSetForeground(display, gc, fore);
+    
+    if (back != values.background)
+        XSetForeground(display, gc, back);
+}
+
+void GfxState::drawRect(vec2 pos, vec2 size) const {
+    pos = viewport.transform(pos);
+    size = viewport.transform(size);
+    XFillRectangle(display, buffer, gc, UNPACKI(pos), UNPACKI(size));
+}
+
+void GfxState::drawEllipse(vec2 pos, vec2 size) const {
+    pos = viewport.transform(pos);
+    size = viewport.transform(size);
+    XDrawArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
 }

@@ -11,7 +11,8 @@ void Building::update(float delta) {
 }
 
 void Building::draw() const {
-    XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
+    GfxState gfx(0x333333, 0);
+    gfx.drawRect(position, size);
 }
 
 void Building::contactNotify(Body *body) {

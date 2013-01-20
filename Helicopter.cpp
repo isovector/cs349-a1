@@ -14,18 +14,28 @@ Helicopter::Helicopter(float w, float h) :
 
 void Helicopter::update(float delta) {
     velocity.x = (input.keyDown(XK_Right) - input.keyDown(XK_Left)) * 200;
-    velocity.y = (input.keyDown(XK_Down) - input.keyDown(XK_Up)) * 200;
+    velocity.y = (input.keyDown(XK_Down) - input.keyDown(XK_Up)) * 200 + 150;
     
     position += velocity * delta;
+    
+    if (position.x < 0)
+        position.x = 0;
+    if (position.x > SCREEN_WIDTH - size.x)
+        position.x = SCREEN_WIDTH - size.x;
+    
+    if (position.y < 0)
+        position.y = 0;
+    if (position.y > SCREEN_HEIGHT - size.y)
+        position.y = SCREEN_HEIGHT - size.y;
     
     if (input.keyPress(XK_space))
         parentState->create(new Projectile(this, vec2(0, 400) + velocity));
 }
 
 void Helicopter::draw() const {
-    XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
+    GfxState gfx(0x565656, 0);
+    gfx.drawRect(position, size);
 
-    XSetForeground(display, gc, 0x00FF00);
-    XFillRectangle(display, buffer, gc, UNPACKI(input.cursor), UNPACKI(vec2(10, 10)));
-    XSetForeground(display, gc, WhitePixel(display, 0));
+    gfx.change(0x00FF00, 0);
+    gfx.drawRect(input.cursor, vec2(10, 10));
 }

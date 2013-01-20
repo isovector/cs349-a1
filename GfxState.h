@@ -3,19 +3,22 @@
 
 #include "a1.h"
 
-class _GfxState {
+class GfxState {
 public:
-    _GfxState();
-    _GfxState(unsigned long fore, unsigned long back);
+    GfxState();
+    GfxState(unsigned long fore, unsigned long back);
+
+    void drawRect(vec2 pos, vec2 size) const;
+    void drawEllipse(vec2 pos, vec2 size) const;
+
+    void change(unsigned long fore, unsigned long back);
     
-    ~_GfxState();
+    ~GfxState();
     
 private:
     void updateValues(XGCValues *vals = NULL);
 
     XGCValues values;
 };
-
-#define GfxState _GfxState __gfxState
 
 #endif

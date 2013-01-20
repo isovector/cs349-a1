@@ -148,7 +148,6 @@ typedef vector2<float> vec2;
 typedef rectangle<float> rect2;
 
 #define UNPACK(vec) (vec).x, (vec).y
-#define UNPACKINT(vec) static_cast<int>((vec).x), static_cast<int>((vec).y)
-#define UNPACKI(vec) UNPACKINT(viewport.transform(vec))
+#define UNPACKI(vec) static_cast<int>((vec).x), static_cast<int>((vec).y)
 
 #endif

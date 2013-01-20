@@ -18,8 +18,10 @@ void Explosion::update(float delta) {
 }
 
 void Explosion::draw() const {
-    GfxState(0xFF0000, 0);
+    GfxState gfx(0xFF0000, 0);
     
     int length = static_cast<int>(elapsed / duration * size);
-    XDrawArc(display, buffer, gc, UNPACKI(vec2(position.x - length / 2, position.y - length / 2)), UNPACKI(vec2(length, length)), 0, 9999999);
+    vec2 size(length, length);
+    
+    gfx.drawEllipse(position - size / 2, size);
 }

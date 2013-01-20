@@ -22,8 +22,8 @@ void Projectile::update(float delta) {
 }
 
 void Projectile::draw() const {
-    GfxState(0xFF00FF, 0);
-    XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
+    GfxState gfx(0xFF00FF, 0);
+    gfx.drawRect(position, size);
 }
 
 void Projectile::contactNotify(Body *body) {

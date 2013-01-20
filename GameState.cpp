@@ -61,9 +61,10 @@ void GameState::update(float delta) {
 }
 
 void GameState::draw() const {
-    XSetForeground(display, gc, BlackPixel(display, 0));
-    XFillRectangle(display, buffer, gc, 0, 0, UNPACKI(vec2(SCREEN_WIDTH, SCREEN_HEIGHT)));
-    XSetForeground(display, gc, WhitePixel(display, 0));
+    {
+        GfxState gfx(0, 0);
+        gfx.drawRect(vec2(0, 0), vec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+    }
     
     for (ObjectConstIterator it = objects.begin(); it != objects.end(); ++it) {
         Entity *entity = dynamic_cast<Entity*>(*it);
