@@ -18,15 +18,14 @@ void Helicopter::update(float delta) {
     
     position += velocity * delta;
     
-    if (input.keyPress(XK_space)) {
+    if (input.keyPress(XK_space))
         parentState->create(new Projectile(this, vec2(0, 400) + velocity));
-    }
 }
 
 void Helicopter::draw() const {
     XFillRectangle(display, buffer, gc, UNPACKI(position), UNPACKI(size));
 
     XSetForeground(display, gc, 0x00FF00);
-    XFillRectangle(display, buffer, gc, UNPACKI(input.cursor), 10, 10);
+    XFillRectangle(display, buffer, gc, UNPACKI(input.cursor), UNPACKI(vec2(10, 10)));
     XSetForeground(display, gc, WhitePixel(display, 0));
 }

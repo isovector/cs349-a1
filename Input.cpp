@@ -36,6 +36,10 @@ void Input::update(float) {
                 cursor.x = ev.xmotion.x;
                 cursor.y = ev.xmotion.y;
             } break;
+            
+            case ConfigureNotify: {
+                initialize_buffers(ev.xconfigure.width, ev.xconfigure.height);
+            } break;
         }
     }
 }

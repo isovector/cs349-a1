@@ -15,8 +15,8 @@ void DifficultyProvider::update(float delta) {
     if (nextBuildingTimer > 0.0f)
         return;
     
-    unsigned int width = rand() % 80 + 10;
-    unsigned int height = rand() % 300 + 50;
+    unsigned int width = rand() % (SCREEN_WIDTH / 8) + 10;
+    unsigned int height = rand() % (SCREEN_HEIGHT / 4 * 3) + 50;
     
     parentState->create(new Building(width, height));
     

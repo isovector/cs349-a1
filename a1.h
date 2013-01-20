@@ -9,13 +9,15 @@
 #include <unistd.h>
 
 #include "Math.h"
+#include "Constants.h"
+#include "Viewport.h"
 
 extern Display *display;
 extern Window win;
 extern GC gc;
 extern Pixmap buffer;
+extern Viewport viewport;
 
-const size_t FRAMES_PER_SECOND = 60;
-const size_t SLEEP_DURATION = 1000000 / FRAMES_PER_SECOND;
+void initialize_buffers(size_t w, size_t h, bool free = true);
 
 #endif

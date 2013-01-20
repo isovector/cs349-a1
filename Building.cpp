@@ -1,7 +1,7 @@
 #include "Building.h"
 
 Building::Building(float width, float height) :
-    Body(vec2(600, 400 - height), vec2(width, height), CG_NEUTRAL)
+    Body(vec2(SCREEN_WIDTH, SCREEN_HEIGHT - height), vec2(width, height), CG_NEUTRAL)
 {
 }
 

@@ -55,7 +55,13 @@ struct vector2 {
 	const vector2<T> operator -(const vector2<T> &v) const
 	{   return vector2<T>(x-v.x, y-v.y);	}
 		
-	//! uniform scaling
+	const vector2<T> operator *(const vector2<T> &v) const
+	{   return vector2<T>(x*v.x, y*v.y);	}
+    
+    const vector2<T> operator /(const vector2<T> &v) const
+	{   return vector2<T>(x/v.x, y/v.y);	}
+    
+    //! uniform scaling
 	const vector2<T> operator *(const T num) const
 	{
 		vector2<T> temp(*this);			
@@ -98,7 +104,7 @@ struct vector2 {
 	}
 
 	//! dot product
-	T operator *(const vector2<T> &v) const
+	T dot(const vector2<T> &v) const
 	{	return x*v.x + y*v.y;	}	
 };
 
@@ -142,6 +148,7 @@ typedef vector2<float> vec2;
 typedef rectangle<float> rect2;
 
 #define UNPACK(vec) (vec).x, (vec).y
-#define UNPACKI(vec) static_cast<int>((vec).x), static_cast<int>((vec).y)
+#define UNPACKINT(vec) static_cast<int>((vec).x), static_cast<int>((vec).y)
+#define UNPACKI(vec) UNPACKINT(viewport.transform(vec))
 
 #endif

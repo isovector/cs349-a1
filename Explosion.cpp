@@ -21,5 +21,5 @@ void Explosion::draw() const {
     GfxState(0xFF0000, 0);
     
     int length = static_cast<int>(elapsed / duration * size);
-    XDrawArc(display, buffer, gc, position.x - length / 2, position.y - length / 2, length, length, 0, 9999999);
+    XDrawArc(display, buffer, gc, UNPACKI(vec2(position.x - length / 2, position.y - length / 2)), UNPACKI(vec2(length, length)), 0, 9999999);
 }

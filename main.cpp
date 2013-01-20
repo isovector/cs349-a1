@@ -11,11 +11,14 @@ GC gc;
 State *state;
 Input input;
 
+Viewport viewport;
 Pixmap buffer;
+
+size_t screen_width = SCREEN_WIDTH, screen_height = SCREEN_HEIGHT;
 
 void initialize_window() {
     display = XOpenDisplay(":0");
-    win = XCreateSimpleWindow(display, RootWindow(display, 0), 10, 10, 600, 400, 1, BlackPixel(display, 0), WhitePixel(display, 0));
+    win = XCreateSimpleWindow(display, RootWindow(display, 0), 10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, 1, BlackPixel(display, 0), WhitePixel(display, 0));
     
     XMapWindow(display, win);
     
@@ -34,11 +37,7 @@ void initialize_window() {
     
     XSync(display, false);
     
-    XSelectInput(display, win, ExposureMask | ButtonPressMask | KeyPressMask | KeyReleaseMask | PointerMotionMask);
-}
-
-void initialize_buffers(size_t w, size_t h) {
-    buffer = XCreatePixmap(display, win, w, h, 24);
+    XSelectInput(display, win, ExposureMask | ButtonPressMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | StructureNotifyMask);
     
     // hide the mouse cursor
     Cursor invisibleCursor;
@@ -54,9 +53,20 @@ void initialize_buffers(size_t w, size_t h) {
     XFreeCursor(display, invisibleCursor);
 }
 
+void initialize_buffers(size_t w, size_t h, bool free) {
+    if (free)
+        XFreePixmap(display, buffer);
+    
+    buffer = XCreatePixmap(display, win, w, h, 24);
+    
+    screen_width = w;
+    screen_height = h;
+    viewport.setScreenSize(vec2(w, h));
+}
+
 int main() {
     initialize_window();
-    initialize_buffers(600, 400);
+    initialize_buffers(SCREEN_WIDTH, SCREEN_HEIGHT, false);
     
     struct timespec ts_start;
     struct timespec ts_end;
@@ -73,6 +83,8 @@ int main() {
         state->update(delta);
         state->draw();
         
+        XCopyArea(display, buffer, win, gc, 0, 0, screen_width, screen_height, 0, 0);
+
         XSync(display, false);
         clock_gettime(CLOCK_MONOTONIC, &ts_end);
         
