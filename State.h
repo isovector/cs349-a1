@@ -1,9 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "a1.h"
-
 class State;
+
+#include "a1.h"
 
 #include "Object.h"
 

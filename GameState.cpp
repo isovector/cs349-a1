@@ -4,8 +4,9 @@
 
 #include "Helicopter.h"
 #include "DifficultyProvider.h"
+#include "SplashState.h"
+#include "Input.h"
 
-#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -58,6 +59,9 @@ void GameState::update(float delta) {
                 bodyB->contactNotify(bodyA);
             }
         }
+        
+    if (input.keyPress(XK_f))
+        states.push_back(new SplashState);
 }
 
 void GameState::draw() const {

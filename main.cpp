@@ -1,6 +1,8 @@
 #include "a1.h"
+#include "SplashState.h"
 #include "GameState.h"
 #include "Input.h"
+
 #include <iostream>
 using namespace std;
 
@@ -8,7 +10,7 @@ Display *display;
 Window win;
 GC gc;
 
-State *state;
+vector<State*> states;
 Input input;
 
 Viewport viewport;
@@ -73,11 +75,15 @@ int main() {
 
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
     
-    state = new GameState;
-    while (state) {
+    states.push_back(new GameState);
+    states.push_back(new SplashState);
+    while (states.size()) {
         float delta = static_cast<float>(SLEEP_DURATION) / 1000000.0f;
         
         clock_gettime(CLOCK_MONOTONIC, &ts_start);
+        
+        size_t numStates = states.size();
+        State *state = states.back();
         
         input.update(delta);
         state->update(delta);
@@ -86,6 +92,10 @@ int main() {
         XCopyArea(display, buffer, win, gc, 0, 0, screen_width, screen_height, 0, 0);
 
         XSync(display, false);
+        
+        if (states.size() < numStates)
+            delete state;
+        
         clock_gettime(CLOCK_MONOTONIC, &ts_end);
         
         size_t duration = (ts_end.tv_nsec - ts_start.tv_nsec) / 1000;
@@ -93,7 +103,6 @@ int main() {
         // sometimes when the window is on a differnt workspace, duration will underflow
         usleep(min(SLEEP_DURATION - duration, SLEEP_DURATION));
     }
-    delete state;
     
     XCloseDisplay(display);
 }
