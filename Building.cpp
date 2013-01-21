@@ -1,4 +1,5 @@
 #include "Building.h"
+#include "Turret.h"
 
 Building::Building(float width, float height) :
     Body(vec2(SCREEN_WIDTH, SCREEN_HEIGHT - height), vec2(width, height), CG_NEUTRAL)
@@ -16,5 +17,8 @@ void Building::draw() const {
 }
 
 void Building::contactNotify(Body *body) {
-    destroy();
+    Turret *turret = dynamic_cast<Turret*>(body);
+    if (!turret) {
+        destroy();
+    }
 }

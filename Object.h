@@ -9,7 +9,7 @@ class Object {
 public:
     Object();
 
-    void setState(State *state);
+    virtual void setState(State *state);
     void destroy();
 
     virtual void update(float delta);

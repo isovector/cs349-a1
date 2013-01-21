@@ -5,8 +5,8 @@
 #include <iostream>
 using namespace std;
 
-Projectile::Projectile(Entity *owner, vec2 vel) :
-    Body(owner->position, vec2(4, 10), CG_FRIEND, false),
+Projectile::Projectile(Entity *owner, vec2 vel, CollisionGroup group) :
+    Body(owner->position, vec2(6, 6), group, true),
     parent(owner),
     velocity(vel)
 {

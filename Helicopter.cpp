@@ -13,8 +13,8 @@ Helicopter::Helicopter(float w, float h) :
 }
 
 void Helicopter::update(float delta) {
-    velocity.x = (input.keyDown(XK_Right) - input.keyDown(XK_Left)) * 200;
-    velocity.y = (input.keyDown(XK_Down) - input.keyDown(XK_Up)) * 200 + 150;
+    velocity.x = (input.keyDown(XK_Right) - input.keyDown(XK_Left)) * 300;
+    velocity.y = (input.keyDown(XK_Down) - input.keyDown(XK_Up)) * 300 + 150;
     
     position += velocity * delta;
     
@@ -29,7 +29,7 @@ void Helicopter::update(float delta) {
         position.y = SCREEN_HEIGHT - size.y;
     
     if (input.keyPress(XK_space))
-        parentState->create(new Projectile(this, vec2(0, 400) + velocity));
+        parentState->create(new Projectile(this, vec2(200, 400) + velocity, CG_FRIEND));
 }
 
 void Helicopter::draw() const {

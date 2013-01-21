@@ -47,5 +47,5 @@ void GfxState::drawRect(vec2 pos, vec2 size) const {
 void GfxState::drawEllipse(vec2 pos, vec2 size) const {
     pos = viewport.transform(pos);
     size = viewport.transform(size);
-    XDrawArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
+    XFillArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
 }

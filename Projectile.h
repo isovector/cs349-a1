@@ -5,7 +5,7 @@
 
 class Projectile : public Body {
 public:
-    Projectile(Entity *owner, vec2 vel);
+    Projectile(Entity *owner, vec2 vel, CollisionGroup group);
 
     virtual void update(float delta);
     virtual void draw() const;

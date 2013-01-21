@@ -16,6 +16,17 @@ public:
 
     virtual void create(Object *obj);
     virtual void destroy(Object *obj);
+
+    template<class T>
+    T* getObjectOfType() {
+        for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); ++it) {
+            T* obj = dynamic_cast<T*>(*it);
+            if (obj)
+                return obj;
+        }
+        
+        return NULL;
+    }
     
 private:
     float scrollSpeed;

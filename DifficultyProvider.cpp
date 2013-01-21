@@ -1,6 +1,7 @@
 #include "DifficultyProvider.h"
 
 #include "Building.h"
+#include "Turret.h"
 
 #include <cstdlib>
 using namespace std;
@@ -19,6 +20,8 @@ void DifficultyProvider::update(float delta) {
     unsigned int height = rand() % (SCREEN_HEIGHT / 4 * 3) + 50;
     
     parentState->create(new Building(width, height));
+    if (rand() % 100 > 60)
+        parentState->create(new Turret(vec2(SCREEN_WIDTH, SCREEN_HEIGHT - height - 25)));
     
     nextBuildingTimer = (rand() % 100) / 100.0f;
 }
