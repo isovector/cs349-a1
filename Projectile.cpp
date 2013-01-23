@@ -1,9 +1,6 @@
 #include "Projectile.h"
-
 #include "Explosion.h"
-
-#include <iostream>
-using namespace std;
+#include "Pickup.h"
 
 Projectile::Projectile(Entity *owner, vec2 vel, CollisionGroup group) :
     Body(owner->position, vec2(6, 6), group, true),
@@ -27,6 +24,8 @@ void Projectile::draw() const {
 }
 
 void Projectile::contactNotify(Body *body) {
-    parentState->create(new Explosion(position, 2, 50));
-    destroy();
+    if (!dynamic_cast<Pickup*>(body)) {
+        parentState->create(new Explosion(position, 2, 50));
+        destroy();
+    }
 }

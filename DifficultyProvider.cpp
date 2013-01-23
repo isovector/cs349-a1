@@ -25,8 +25,21 @@ void DifficultyProvider::update(float delta) {
     if (rand() % 100 > 60)
         parentState->create(new Turret(vec2(SCREEN_WIDTH, SCREEN_HEIGHT - height - 25)));
     
-    if (rand() % 100 > 80)
-        parentState->create(new BlinkPickup(vec2(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT)));
+    if (rand() % 100 > 70) {
+        switch (rand() % 3) {
+            case 0: {
+                parentState->create(new BlinkPickup(vec2(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT)));
+            } break;
+            
+            case 1: {
+                parentState->create(new BolderPickup(vec2(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT)));
+            } break;
+            
+            case 2: {
+                parentState->create(new ShieldPickup(vec2(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT)));
+            } break;
+        }
+    }
     
     nextBuildingTimer = (rand() % 100) / 100.0f + 0.3f;
 }

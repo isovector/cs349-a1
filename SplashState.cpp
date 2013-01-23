@@ -20,13 +20,21 @@ void SplashState::draw() const {
     gfx.drawText(vec2(500, 15), "Use WASD to move!");
     gfx.drawText(vec2(500, 29), "Press Space to shoot!");
     gfx.drawText(vec2(500, 43), "Use E to use powerups!");
+    gfx.drawText(vec2(500, 57), "Aim with the mouse!");
+    gfx.drawText(vec2(500, 71), "Set speed with 1-9!");
     
     gfx.drawText(vec2(25, 420), "Powerups:");
     
-    gfx.drawText(vec2(50, 440), "Teleport");
+    gfx.drawText(vec2(50, 445), "Teleport");
+    gfx.drawText(vec2(150, 445), "Boulder");
+    gfx.drawText(vec2(250, 445), "Shield");
     
-    gfx.change(0xFF00FF, 0);
+    gfx.change(0x00AAFF, 0);
     gfx.drawEllipse(vec2(25, 430), vec2(20, 20), false);
+    gfx.change(0x00FF00, 0);
+    gfx.drawEllipse(vec2(125, 430), vec2(20, 20), false);
+    gfx.change(0x770077, 0);
+    gfx.drawEllipse(vec2(225, 430), vec2(20, 20), false);
 }
 
 

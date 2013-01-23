@@ -78,13 +78,15 @@ int main() {
 
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
     
+    float timeScale = 1.0f;
+    
     states.push_back(new GameState);
     states.push_back(new SplashState);
     while (states.size()) {
         State *state = states.back();
         
         try {
-            float delta = static_cast<float>(SLEEP_DURATION) / 1000000.0f;
+            float delta = static_cast<float>(SLEEP_DURATION) / 1000000.0f * timeScale;
             
             clock_gettime(CLOCK_MONOTONIC, &ts_start);
             
@@ -100,6 +102,20 @@ int main() {
             
             if (states.size() < numStates)
                 delete state;
+            
+                
+            #define TIMESCALER(k) if (input.keyPress(XK_##k)) timeScale = 0.1f * k;
+            TIMESCALER(1)
+            TIMESCALER(2)
+            TIMESCALER(3)
+            TIMESCALER(4)
+            TIMESCALER(5)
+            TIMESCALER(6)
+            TIMESCALER(7)
+            TIMESCALER(8)
+            TIMESCALER(9)
+            if (input.keyPress(XK_0)) timeScale = 1.0f;
+            #undef TIMESCALER
             
             clock_gettime(CLOCK_MONOTONIC, &ts_end);
             
