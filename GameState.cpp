@@ -15,10 +15,18 @@ typedef std::list<Object*>::const_iterator ObjectConstIterator;
 typedef std::set<Object*>::iterator DestroyObjectIterator;
 
 GameState::GameState() :
-    scrollSpeed(200.0f)
+    scrollSpeed(200.0f),
+    gameOverTimer(1.5f)
 {
     create(new Helicopter(30, 15));
     create(new DifficultyProvider());
+    
+    score = 0;
+}
+
+GameState::~GameState() {
+    for (ObjectIterator it = objects.begin(); it != objects.end(); ++it)
+        delete *it;
 }
 
 void GameState::update(float delta) {
@@ -60,6 +68,12 @@ void GameState::update(float delta) {
             }
         }
         
+    ++score;
+        
+    gameOverTimer -= delta;
+    if (gameOverTimer <= 0.0f)
+        loseGame();
+        
     if (input.keyPress(XK_f))
         states.push_back(new SplashState);
 }
@@ -70,10 +84,20 @@ void GameState::draw() const {
         gfx.drawRect(vec2(0, 0), vec2(SCREEN_WIDTH, SCREEN_HEIGHT));
     }
     
+    Helicopter *heli = NULL;
     for (ObjectConstIterator it = objects.begin(); it != objects.end(); ++it) {
         Entity *entity = dynamic_cast<Entity*>(*it);
-        if (entity)
+        if (entity) {
+            if (heli == NULL)
+                heli = dynamic_cast<Helicopter*>(entity);
+            
             entity->draw();
+        }
+    }
+    
+    if (heli) {
+        heli->draw();
+        gameOverTimer = 1.5f;
     }
 }
 

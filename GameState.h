@@ -10,6 +10,7 @@
 class GameState : public State {
 public:
     GameState();
+    ~GameState();
     
     virtual void update(float delta);
     virtual void draw() const;
@@ -30,6 +31,7 @@ public:
     
 private:
     float scrollSpeed;
+    mutable float gameOverTimer;
     std::list<Object*> objects;
     std::set<Object*> destroyedObjects;
 };

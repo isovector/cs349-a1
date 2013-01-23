@@ -9,8 +9,8 @@ public:
     GfxState();
     GfxState(unsigned long fore, unsigned long back);
 
-    void drawRect(vec2 pos, vec2 size) const;
-    void drawEllipse(vec2 pos, vec2 size) const;
+    void drawRect(vec2 pos, vec2 size, bool fill = true) const;
+    void drawEllipse(vec2 pos, vec2 size, bool fill = true) const;
     void drawText(vec2 pos, const char *str) const;
 
     void change(unsigned long fore, unsigned long back);

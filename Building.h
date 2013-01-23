@@ -5,7 +5,7 @@
 
 class Building : public Body {
 public:
-    Building(float width, float height);
+    Building(float width, float height, bool topAligned);
 
     virtual void update(float delta);
     virtual void draw() const;

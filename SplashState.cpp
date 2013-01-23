@@ -16,6 +16,17 @@ void SplashState::draw() const {
     gfx.drawText(vec2(15, 15), "Alexander Maguire");
     gfx.drawText(vec2(15, 29), "20396195");
     gfx.drawText(vec2(SCREEN_WIDTH, SCREEN_HEIGHT) / 2, "Press F to play!");
+    
+    gfx.drawText(vec2(500, 15), "Use WASD to move!");
+    gfx.drawText(vec2(500, 29), "Press Space to shoot!");
+    gfx.drawText(vec2(500, 43), "Use E to use powerups!");
+    
+    gfx.drawText(vec2(25, 420), "Powerups:");
+    
+    gfx.drawText(vec2(50, 440), "Teleport");
+    
+    gfx.change(0xFF00FF, 0);
+    gfx.drawEllipse(vec2(25, 430), vec2(20, 20), false);
 }
 
 

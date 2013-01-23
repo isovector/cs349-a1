@@ -10,7 +10,7 @@ public:
     Object();
 
     virtual void setState(State *state);
-    void destroy();
+    virtual void destroy();
 
     virtual void update(float delta);
 

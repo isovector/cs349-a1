@@ -20,7 +20,9 @@ extern GC gc;
 extern Pixmap buffer;
 extern Viewport viewport;
 extern std::vector<State*> states;
+extern int score;
 
+void loseGame();
 void initialize_buffers(size_t w, size_t h, bool free = true);
 
 #endif

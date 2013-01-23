@@ -17,9 +17,13 @@ void Turret::setState(State *state) {
 }
 
 void Turret::update(float delta) {
+    if (target && target->garbage) {
+        target = NULL;
+    }
+    
     shootTimer -= delta;
     
-    if (shootTimer <= 0.0f) {
+    if (target && shootTimer <= 0.0f) {
         vec2 angle = target->position - position;
         parentState->create(new Projectile(this, angle * 2.0f, CG_ENEMY));
         shootTimer = 0.8f;
@@ -36,4 +40,8 @@ void Turret::draw() const {
 }
 
 void Turret::contactNotify(Body *body) {
+    if (dynamic_cast<Projectile*>(body)) {
+        destroy();
+        score += 500;
+    }
 }

@@ -2,6 +2,7 @@
 #include "Input.h"
 
 #include "Projectile.h"
+#include "Building.h"
 
 #include <iostream>
 using namespace std;
@@ -13,10 +14,13 @@ Helicopter::Helicopter(float w, float h) :
 }
 
 void Helicopter::update(float delta) {
-    velocity.x = (input.keyDown(XK_Right) - input.keyDown(XK_Left)) * 300;
-    velocity.y = (input.keyDown(XK_Down) - input.keyDown(XK_Up)) * 300 + 150;
+    velocity.x = (input.keyDown(XK_d) - input.keyDown(XK_a)) * 300;
+    velocity.y = (input.keyDown(XK_s) - input.keyDown(XK_w)) * 300 + 150;
     
     position += velocity * delta;
+    
+    if (position.x <= -size.x / 2)
+        loseGame();
     
     if (position.x < 0)
         position.x = 0;
@@ -30,6 +34,23 @@ void Helicopter::update(float delta) {
     
     if (input.keyPress(XK_space))
         parentState->create(new Projectile(this, vec2(200, 400) + velocity, CG_FRIEND));
+    if (input.keyPress(XK_e))
+        usePowerup();
+}
+
+void Helicopter::usePowerup() {
+    if (!powerups.size())
+        return;
+    
+    Powerup *pu = powerups.front();
+    pu->setInstigator(this);
+    
+    if (pu->evaluate()) {
+        powerups.pop_front();
+        parentState->create(pu);
+    }
+    
+    score += 100;
 }
 
 void Helicopter::draw() const {
@@ -38,4 +59,32 @@ void Helicopter::draw() const {
 
     gfx.change(0x00FF00, 0);
     gfx.drawRect(input.cursor, vec2(10, 10));
+    
+    size_t i = 0;
+    for (list<Powerup*>::const_iterator it = powerups.begin(); it != powerups.end(); ++it)
+        (*it)->instigatorItem->drawUI(vec2(25 + 25 * ++i, 440));
+}
+
+void Helicopter::addPowerup(Powerup* pu) {
+    powerups.push_back(pu);
+    score += 100;
+}
+
+void Helicopter::contactNotify(Body *body) {
+    if (dynamic_cast<Building*>(body)) {
+        rect2 rect = body->getRect();
+        rect2 intersect = rect.intersection(getRect());
+        
+        if (rect.left() == intersect.left()) {
+            position.x = rect.left() - size.x;
+        } else if (rect.right() == intersect.right()) {
+            position.x = rect.right();
+        } else if (rect.bottom() == intersect.bottom()) {
+            position.y = rect.bottom();
+        } else if (rect.top() == intersect.top()) {
+            position.y = rect.top() - size.y;
+        }
+    } else if (dynamic_cast<Projectile*>(body)) {
+        destroy();
+    }
 }

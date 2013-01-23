@@ -5,6 +5,7 @@
 #define VECTOR_MATH_H
 
 #include <math.h> 
+#include <algorithm>
 
 template <typename T>
 struct vector2 {
@@ -135,12 +136,12 @@ struct rectangle {
     }
     
     rectangle<T> intersection(const rectangle<T> &r2) const {
-        T left = max(left(), r2.left());
-        T right = min(right(), r2.right());
-        T top = max(top(), r2.top());
-        T bottom = min(bottom(), r2.bottom());
+        T l = std::max(left(), r2.left());
+        T r = std::min(right(), r2.right());
+        T t = std::max(top(), r2.top());
+        T b = std::min(bottom(), r2.bottom());
         
-        return rectangle<T>(left, top, right - left, bottom - top);
+        return rectangle<T>(l, t, r - l, b - t);
     }
 };
 

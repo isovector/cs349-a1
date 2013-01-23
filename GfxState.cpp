@@ -38,16 +38,23 @@ void GfxState::change(unsigned long fore, unsigned long back) {
         XSetForeground(display, gc, back);
 }
 
-void GfxState::drawRect(vec2 pos, vec2 size) const {
+void GfxState::drawRect(vec2 pos, vec2 size, bool fill) const {
     pos = viewport.transform(pos);
     size = viewport.transform(size);
-    XFillRectangle(display, buffer, gc, UNPACKI(pos), UNPACKI(size));
+    
+    if (fill)
+        XFillRectangle(display, buffer, gc, UNPACKI(pos), UNPACKI(size));
+    else
+        XDrawRectangle(display, buffer, gc, UNPACKI(pos), UNPACKI(size));
 }
 
-void GfxState::drawEllipse(vec2 pos, vec2 size) const {
+void GfxState::drawEllipse(vec2 pos, vec2 size, bool fill) const {
     pos = viewport.transform(pos);
     size = viewport.transform(size);
-    XFillArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
+    if (fill)
+        XFillArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
+    else
+        XDrawArc(display, buffer, gc, UNPACKI(pos), UNPACKI(size), 0, 9999999);
 }
 
 void GfxState::drawText(vec2 pos, const char *str) const {
